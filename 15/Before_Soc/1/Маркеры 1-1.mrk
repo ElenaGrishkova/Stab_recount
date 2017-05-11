@@ -1,0 +1,105 @@
+[Main]		3	tic-tot	sec-tot	tic	min	sec	t	"?t, sec"
+Method=Анализ сигналов кресла нескольких пациентов									
+Probe=Проба анализа сигналов кресла нескольких пациентов									
+LongSignal=62941									
+[Marker 1]									
+Position=1579	ГЗ	[Marker 1]	1579	31	29	0	31	0:31.29	31
+Komment=Маркер 1									
+[Marker 2]									
+Position=3029	ГЗ_end	[Marker 2]	3029	60	29	1	0	1:0.29	29
+Komment=Маркер 2									
+[Marker 3]									
+Position=4681	Extract per1 SetValue_Start	[Marker 3]	4681	93	31	1	33	1:33.31	33
+Komment=Маркер 3									
+[Marker 4]									
+Position=9243	Extract per3 SetValue_Start	[Marker 4]	9243	184	43	3	4	3:4.43	91
+Komment=Маркер 4									
+[Marker 5]									
+Position=13438	Extract per5 SetValue_Start	[Marker 5]	13438	268	38	4	28	4:28.38	84
+Komment=Маркер 5									
+[Marker 6]									
+Position=14688	Extract per5 ShowRes_Start	[Marker 6]	14688	293	38	4	53	4:53.38	25
+Komment=Маркер 6									
+[Marker 7]									
+Position=16433	Extract end	[Marker 7]	16433	328	33	5	28	5:28.33	35
+Komment=Маркер 7									
+[Marker 8]									
+Position=17699	Show res of Extract	[Marker 8]	17699	353	49	5	53	5:53.49	25
+Komment=Маркер 8									
+[Marker 9]									
+Position=18849	Contrib per1 SetValue_Start	[Marker 9]	18849	376	49	6	16	6:16.49	23
+Komment=Маркер 9									
+[Marker 10]									
+Position=21095	Contrib per2 SetValue_Start	[Marker 10]	21095	421	45	7	1	7:1.45	45
+Komment=Маркер 10									
+[Marker 11]									
+Position=28069	Contrib per4 ShowRes_Start	[Marker 11]	28069	561	19	9	21	9:21.19	140
+Komment=Маркер 11									
+[Marker 12]									
+Position=29272	Contrib per5 SetValue_Start	[Marker 12]	29272	585	22	9	45	9:45.22	24
+Komment=Маркер 12									
+[Marker 13]									
+Position=31090	Contrib per5 ShowRes_Start	[Marker 13]	31090	621	40	10	21	10:21.40	36
+Komment=Маркер 13									
+[Marker 14]									
+Position=37316	Extract per1 SetValue_Start	[Marker 14]	37316	746	16	12	26	12:26.16	125
+Komment=Маркер 14									
+[Marker 15]									
+Position=39551	Extract per1 ShowRes_Start	[Marker 15]	39551	791	1	13	11	13:11.1	45
+Komment=Маркер 15									
+[Marker 16]									
+Position=40756	Extract per2 SetValue_Start	[Marker 16]	40756	815	6	13	35	13:35.6	24
+Komment=Маркер 16									
+[Marker 17]									
+Position=41677	Extract per2 ShowRes_Start	[Marker 17]	41677	833	27	13	53	13:53.27	18
+Komment=Маркер 17									
+[Marker 18]									
+Position=42874	Extract per3 SetValue_Start	[Marker 18]	42874	857	24	14	17	14:17.24	24
+Komment=Маркер 18									
+[Marker 19]									
+Position=43898	Extract per3 ShowRes_Start	[Marker 19]	43898	877	48	14	37	14:37.48	20
+Komment=Маркер 19									
+[Marker 20]									
+Position=44837	Extract per4 SetValue_Start	[Marker 20]	44837	896	37	14	56	14:56.37	19
+Komment=Маркер 20									
+[Marker 21]									
+Position=45426	Extract per4 ShowRes_Start	[Marker 21]	45426	908	26	15	8	15:8.26	12
+Komment=Маркер 21									
+[Marker 22]									
+Position=46153	Extract per5 SetValue_Start	[Marker 22]	46153	923	3	15	23	15:23.3	15
+Komment=Маркер 22									
+[Marker 23]									
+Position=47084	Extract per5 ShowRes_Start	[Marker 23]	47084	941	34	15	41	15:41.34	18
+Komment=Маркер 23									
+[Marker 24]									
+Position=48615	Extract end	[Marker 24]	48615	972	15	16	12	16:12.15	31
+Komment=Маркер 24									
+[Marker 25]									
+Position=49440	Show res of Extract	[Marker 25]	49440	988	40	16	28	16:28.40	16
+Komment=Маркер 25									
+[Marker 26]									
+Position=50664	Contrib per1 SetValue_Start	[Marker 26]	50664	1013	14	16	53	16:53.14	25
+Komment=Маркер 26									
+[Marker 27]									
+Position=54865	Contrib per3 SetValue_Start	[Marker 27]	54865	1097	15	18	17	18:17.15	84
+Komment=Маркер 27									
+[Marker 28]									
+Position=56001	Extract per3 ShowRes_Start	[Marker 28]	56001	1120	1	18	40	18:40.1	23
+Komment=Маркер 28									
+[Marker 29]									
+Position=59046	Contrib per5 SetValue_Start	[Marker 29]	59046	1180	46	19	40	19:40.46	60
+Komment=Маркер 29									
+[Marker 30]									
+Position=59886	Contrib per5 ShowRes_Start	[Marker 30]	59886	1197	36	19	57	19:57.36	17
+Komment=Маркер 30									
+[Marker 31]									
+Position=61920	ShowGain	[Marker 31]	61920	1238	20	20	38	20:38.20	41
+Komment=Маркер 31									
+									
+									
+									
+									
+	ГЗ								
+									
+									
+	ГЗ_end								

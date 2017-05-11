@@ -1,0 +1,25 @@
+[Main]
+Method=Анализ сигналов кресла нескольких пациентов
+Probe=Проба анализа сигналов кресла нескольких пациентов
+LongSignal=77341
+[Marker 1]
+Position=1529
+Komment=Маркер 1
+[Marker 2]
+Position=3118
+Komment=Маркер 2
+[Marker 3]
+Position=4782
+Komment=Маркер 3
+[Marker 4]
+Position=21390
+Komment=Маркер 4
+[Marker 5]
+Position=22504
+Komment=Маркер 5
+[Marker 6]
+Position=23954
+Komment=Маркер 6
+[Marker 7]
+Position=49373
+Komment=Маркер 7

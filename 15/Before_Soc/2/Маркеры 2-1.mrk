@@ -1,0 +1,97 @@
+[Main]
+Method=Анализ сигналов кресла нескольких пациентов
+Probe=Проба анализа сигналов кресла нескольких пациентов
+LongSignal=62937
+[Marker 1]
+Position=1580
+Komment=Маркер 1
+[Marker 2]
+Position=3029
+Komment=Маркер 2
+[Marker 3]
+Position=4680
+Komment=Маркер 3
+[Marker 4]
+Position=9243
+Komment=Маркер 4
+[Marker 5]
+Position=13437
+Komment=Маркер 5
+[Marker 6]
+Position=14688
+Komment=Маркер 6
+[Marker 7]
+Position=16434
+Komment=Маркер 7
+[Marker 8]
+Position=17698
+Komment=Маркер 8
+[Marker 9]
+Position=18848
+Komment=Маркер 9
+[Marker 10]
+Position=21093
+Komment=Маркер 10
+[Marker 11]
+Position=28068
+Komment=Маркер 11
+[Marker 12]
+Position=29271
+Komment=Маркер 12
+[Marker 13]
+Position=31088
+Komment=Маркер 13
+[Marker 14]
+Position=37313
+Komment=Маркер 14
+[Marker 15]
+Position=39548
+Komment=Маркер 15
+[Marker 16]
+Position=40753
+Komment=Маркер 16
+[Marker 17]
+Position=41673
+Komment=Маркер 17
+[Marker 18]
+Position=42872
+Komment=Маркер 18
+[Marker 19]
+Position=43895
+Komment=Маркер 19
+[Marker 20]
+Position=44834
+Komment=Маркер 20
+[Marker 21]
+Position=45423
+Komment=Маркер 21
+[Marker 22]
+Position=46151
+Komment=Маркер 22
+[Marker 23]
+Position=47081
+Komment=Маркер 23
+[Marker 24]
+Position=48612
+Komment=Маркер 24
+[Marker 25]
+Position=49436
+Komment=Маркер 25
+[Marker 26]
+Position=50662
+Komment=Маркер 26
+[Marker 27]
+Position=54862
+Komment=Маркер 27
+[Marker 28]
+Position=55998
+Komment=Маркер 28
+[Marker 29]
+Position=59043
+Komment=Маркер 29
+[Marker 30]
+Position=59882
+Komment=Маркер 30
+[Marker 31]
+Position=61916
+Komment=Маркер 31

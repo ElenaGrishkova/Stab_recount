@@ -1,0 +1,76 @@
+[Main]		3	tic-tot	sec-tot	tic	min	sec	t	"?t, sec"
+Method=Анализ сигналов кресла нескольких пациентов									
+Probe=Проба анализа сигналов кресла нескольких пациентов									
+LongSignal=49530									
+[Marker 1]									
+Position=1521	ГЗ	[Marker 1]	1521	30	21	0	30	0:30.21	30
+Komment=Маркер 1									
+[Marker 2]									
+Position=3028	ГЗ_end	[Marker 2]	3028	60	28	1	0	1:0.28	30
+Komment=Маркер 2									
+[Marker 3]									
+Position=4231	Extract per1 SetValue_Start	[Marker 3]	4231	84	31	1	24	1:24.31	24
+Komment=Маркер 3									
+[Marker 4]									
+Position=10453	Extract end	[Marker 4]	10453	209	3	3	29	3:29.3	125
+Komment=Маркер 4									
+[Marker 5]									
+Position=11640	Show res of Extract	[Marker 5]	11640	232	40	3	52	3:52.40	23
+Komment=Маркер 5									
+[Marker 6]									
+Position=12974	Contrib per1 SetValue_Start	[Marker 6]	12974	259	24	4	19	4:19.24	27
+Komment=Маркер 6									
+[Marker 7]									
+Position=20379	Contrib per5 SetValue_Start	[Marker 7]	20379	407	29	6	47	6:47.29	148
+Komment=Маркер 7									
+[Marker 8]									
+Position=21266	Contrib per5 ShowRes_Start	[Marker 8]	21266	425	16	7	5	7:5.16	18
+Komment=Маркер 8									
+[Marker 9]									
+Position=22556	ShowGain	[Marker 9]	22556	451	6	7	31	7:31.6	26
+Komment=Маркер 9									
+[Marker 10]									
+Position=23324	Contrib end	[Marker 10]	23324	466	24	7	46	7:46.24	15
+Komment=Маркер 10									
+[Marker 11]									
+Position=24316	ГО	[Marker 11]	24316	486	16	8	6	8:6.16	20
+Komment=Маркер 11									
+[Marker 12]									
+Position=25827	ГЗ	[Marker 12]	25827	516	27	8	36	8:36.27	30
+Komment=Маркер 12									
+[Marker 13]									
+Position=27329	ГЗ_end	[Marker 13]	27329	546	29	9	6	9:6.29	30
+Komment=Маркер 13									
+[Marker 14]									
+Position=28011	Extract per1 SetValue_Start	[Marker 14]	28011	560	11	9	20	9:20.11	14
+Komment=Маркер 14									
+[Marker 15]									
+Position=33085	Extract end	[Marker 15]	33085	661	35	11	1	11:1.35	101
+Komment=Маркер 15									
+[Marker 16]									
+Position=33644	Show res of Extract	[Marker 16]	33644	672	44	11	12	11:12.44	11
+Komment=Маркер 16									
+[Marker 17]									
+Position=34898	Contrib per1 SetValue_Start	[Marker 17]	34898	697	48	11	37	11:37.48	25
+Komment=Маркер 17									
+[Marker 18]									
+Position=42296	Contrib per5 SetValue_Start	[Marker 18]	42296	845	46	14	5	14:5.46	148
+Komment=Маркер 18									
+[Marker 19]									
+Position=43393	Contrib per5 ShowRes_Start	[Marker 19]	43393	867	43	14	27	14:27.43	22
+Komment=Маркер 19									
+[Marker 20]									
+Position=44641	ShowGain	[Marker 20]	44641	892	41	14	52	14:52.41	25
+Komment=Маркер 20									
+[Marker 21]									
+Position=45489	Contrib end	[Marker 21]	45489	909	39	15	9	15:9.39	17
+Komment=Маркер 21									
+[Marker 22]									
+Position=46356	ГО	[Marker 22]	46356	927	6	15	27	15:27.6	18
+Komment=Маркер 22									
+[Marker 23]									
+Position=47869	ГЗ	[Marker 23]	47869	957	19	15	57	15:57.19	30
+Komment=Маркер 23									
+[Marker 24]									
+Position=49383	ГЗ_end	[Marker 24]	49383	987	33	16	27	16:27.33	30
+Komment=Маркер 24									

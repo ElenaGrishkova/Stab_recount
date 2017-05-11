@@ -1,0 +1,133 @@
+[Main]
+Method=Анализ сигналов кресла нескольких пациентов
+Probe=Проба анализа сигналов кресла нескольких пациентов
+LongSignal=166200
+[Marker 1]
+Position=1562
+Komment=Маркер 1
+[Marker 2]
+Position=3049
+Komment=Маркер 2
+[Marker 3]
+Position=4648
+Komment=Маркер 3
+[Marker 4]
+Position=5657
+Komment=Маркер 4
+[Marker 5]
+Position=6304
+Komment=Маркер 5
+[Marker 6]
+Position=7550
+Komment=Маркер 6
+[Marker 7]
+Position=8182
+Komment=Маркер 7
+[Marker 8]
+Position=9072
+Komment=Маркер 8
+[Marker 9]
+Position=9713
+Komment=Маркер 9
+[Marker 10]
+Position=10608
+Komment=Маркер 10
+[Marker 11]
+Position=10863
+Komment=Маркер 11
+[Marker 12]
+Position=11804
+Komment=Маркер 12
+[Marker 13]
+Position=12237
+Komment=Маркер 13
+[Marker 14]
+Position=13802
+Komment=Маркер 14
+[Marker 15]
+Position=14050
+Komment=Маркер 15
+[Marker 16]
+Position=14626
+Komment=Маркер 16
+[Marker 17]
+Position=15244
+Komment=Маркер 17
+[Marker 18]
+Position=15704
+Komment=Маркер 18
+[Marker 19]
+Position=16719
+Komment=Маркер 19
+[Marker 20]
+Position=17616
+Komment=Маркер 20
+[Marker 21]
+Position=18176
+Komment=Маркер 21
+[Marker 22]
+Position=19329
+Komment=Маркер 22
+[Marker 23]
+Position=19939
+Komment=Маркер 23
+[Marker 24]
+Position=21359
+Komment=Маркер 24
+[Marker 25]
+Position=22185
+Komment=Маркер 25
+[Marker 26]
+Position=23173
+Komment=Маркер 26
+[Marker 27]
+Position=24081
+Komment=Маркер 27
+[Marker 28]
+Position=24807
+Komment=Маркер 28
+[Marker 29]
+Position=25650
+Komment=Маркер 29
+[Marker 30]
+Position=26483
+Komment=Маркер 30
+[Marker 31]
+Position=27405
+Komment=Маркер 31
+[Marker 32]
+Position=28186
+Komment=Маркер 32
+[Marker 33]
+Position=28990
+Komment=Маркер 33
+[Marker 34]
+Position=30271
+Komment=Маркер 34
+[Marker 35]
+Position=31564
+Komment=Маркер 35
+[Marker 36]
+Position=32940
+Komment=Маркер 36
+[Marker 37]
+Position=34864
+Komment=Маркер 37
+[Marker 38]
+Position=36133
+Komment=Маркер 38
+[Marker 39]
+Position=37114
+Komment=Маркер 39
+[Marker 40]
+Position=38316
+Komment=Маркер 40
+[Marker 41]
+Position=39626
+Komment=Маркер 41
+[Marker 42]
+Position=40921
+Komment=Маркер 42
+[Marker 43]
+Position=42790
+Komment=Маркер 43
