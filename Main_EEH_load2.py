@@ -38,7 +38,8 @@ def processData(data, line, n, isComment, folder) :
         prev = int(index)
 
     if not isComment :
-        if index<df.shape[0]: ndf.append(np.array(df[markers[-1]:]))
+        if index<df.shape[0]:
+            ndf.append(np.array(df[markers[-1]:]))
 
     mean = [j.mean() for j in ndf]
     std = [j.std() for j in ndf]
@@ -130,7 +131,7 @@ for line in [1]:
         markers = np.sort(markers)
 
         processData(data, 0, n, False, '01')
-"""
+
 #-----------------------------------------------------------------------------------------------------------------------
 #01 After
 #-----------------------------------------------------------------------------------------------------------------------
@@ -153,7 +154,6 @@ wb.save(filename='01/{}_EEH2.xlsx'.format(state))
 for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
-        if n == 1: continue
         data = pd.read_excel("01/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
 
         data = data.drop(data[data.stad == '0'].index)
@@ -164,8 +164,10 @@ for line in [1]:
         lol1 = data.groupby('stad')
         c = [lol1.get_group(x) for x in lol1.groups]
         markers = [max(j.index) for j in c]
-        markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
-        markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
+       # markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        #markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
         markers = np.sort(markers)
 
         processData(data, 0, n, False, '01')
+        
+"""
