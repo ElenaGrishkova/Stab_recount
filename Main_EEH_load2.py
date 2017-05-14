@@ -24,7 +24,7 @@ def rle(inarray):
         p = np.cumsum(np.append(0, z))[:-1]  # positions
         return (z, p, ia[i])
 
-def processData(data, line, n, isComment, folder) :
+def processData(data, line, n, isComment, folder, markers) :
     df = data[['X', 'Y', 'Z']].rolling(window=3, min_periods=1, center=True).mean().diff()
     df = df[np.isfinite(df['X'])]
     df = df ** 2
@@ -96,6 +96,7 @@ def processData(data, line, n, isComment, folder) :
 #-----------------------------------------------------------------------------------------------------------------------
 #01 Before
 #-----------------------------------------------------------------------------------------------------------------------
+logging.debug('01 Before')
 names = [u'Иванов Владислав',
          u'Леонтьева Ксения',
          u'Кравец Мария',
@@ -130,11 +131,13 @@ for line in [1]:
         markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
         markers = np.sort(markers)
 
-        processData(data, 0, n, False, '01')
+        processData(data, 0, n, False, '01', markers)
 
 #-----------------------------------------------------------------------------------------------------------------------
 #01 After
 #-----------------------------------------------------------------------------------------------------------------------
+"""
+logging.debug('01 After')
 names = [u'Гуров Алексей',
          u'Калмыкова Светлана',
          u'Акулов Дмитрий',
@@ -164,10 +167,115 @@ for line in [1]:
         lol1 = data.groupby('stad')
         c = [lol1.get_group(x) for x in lol1.groups]
         markers = [max(j.index) for j in c]
-       # markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        #markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
         #markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
         markers = np.sort(markers)
 
-        processData(data, 0, n, False, '01')
+        processData(data, 0, n, False, '01', markers)
         
-"""
+
+#-----------------------------------------------------------------------------------------------------------------------
+#08 Before
+#-----------------------------------------------------------------------------------------------------------------------
+logging.debug('08 Before')
+names = [u'Самолыго Алексей',
+         u'Амбарцумян Дарья',
+         u'Заруба Кирилл',
+         u'Рыжников Андрей',
+         u'Гребенчук Сергей',
+         u'Казаков Алексей',
+         u'Наркунас Татьяна',
+         u'Замятина Екатерина',
+         u'Ермолова Марина',
+         u'Лелякин Дмитрий']
+
+# folder = '2016-03-11_Collective_action'
+state = 'Before_Soc'
+label = 2
+wb = Workbook()
+wb.save(filename='08/{}_EEH2.xlsx'.format(state))
+for line in [1]:
+    for n in range(10):
+
+        data = pd.read_excel("08/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
+        data1 = data[:41787]
+        data2 = data[41788:]
+        data = data.drop(data[data.stad == '0'].index)
+        data = data.reset_index()
+
+        marker = pd.read_excel('08/Before_Soc/1/Markers_1-1.xls')
+        marker = marker[np.isfinite(marker['sec'])]
+
+        data1 = data1.drop(data1[data1.stad == '0'].index)
+        data1 = data1.reset_index()
+        data2 = data2.drop(data2[data2.stad == '0'].index)
+        data2 = data2.reset_index()
+
+        lol1 = data1.groupby('stad')
+        c1 = [lol1.get_group(x) for x in lol1.groups]
+        markers1 = [max(j.index) for j in c1]
+        markers1.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        markers1.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
+        markers1 = np.sort(markers1)
+
+        lol2 = data2.groupby('stad')
+        c2 = [lol2.get_group(x) for x in lol2.groups]
+        markers2 = [max(j.index) for j in c2]
+        markers2 = np.sort(markers2)
+
+        markers = list(markers1) + list(markers2 + markers1[-1])
+
+        processData(data, 0, n, True, '08', markers)
+
+# -----------------------------------------------------------------------------------------------------------------------
+# 08 After
+# -----------------------------------------------------------------------------------------------------------------------
+logging.debug('08 After')
+names = [u'Садакова Кристина',
+         u'Наркунас Татьяна',
+         u'Лелякин Дмитрий',
+         u'Рыжников Андрей',
+         u'Гребенчук Сергей',
+         u'Казаков Алексей',
+         u'Заруба Кирилл',
+         u'Замятина Екатерина',
+         u'Ермолова Марина',
+         u'Самолыго Алексей']
+
+# folder = '2016-03-11_Collective_action'
+state = 'After_Soc'
+label = 2
+wb = Workbook()
+wb.save(filename='08/{}_EEH2.xlsx'.format(state))
+for line in [1]:
+    for n in range(10):
+
+        data = pd.read_excel("08/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
+        data1 = data[:41787]
+        data2 = data[41788:]
+        data = data.drop(data[data.stad == '0'].index)
+        data = data.reset_index()
+
+        marker = pd.read_excel('08/After_Soc/1/Markers_1-2.xls')
+        marker = marker[np.isfinite(marker['sec'])]
+
+        data1 = data1.drop(data1[data1.stad == '0'].index)
+        data1 = data1.reset_index()
+        data2 = data2.drop(data2[data2.stad == '0'].index)
+        data2 = data2.reset_index()
+
+        lol1 = data1.groupby('stad')
+        c1 = [lol1.get_group(x) for x in lol1.groups]
+        markers1 = [max(j.index) for j in c1]
+        markers1.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        markers1.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
+        markers1 = np.sort(markers1)
+
+        lol2 = data2.groupby('stad')
+        c2 = [lol2.get_group(x) for x in lol2.groups]
+        markers2 = [max(j.index) for j in c2]
+        markers2 = np.sort(markers2)
+
+        markers = list(markers1) + list(markers2 + markers1[-1])
+
+        processData(data, 0, n, True, '08', markers)
