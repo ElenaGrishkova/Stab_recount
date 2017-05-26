@@ -24,7 +24,7 @@ def rle(inarray):
         p = np.cumsum(np.append(0, z))[:-1]  # positions
         return (z, p, ia[i])
 
-def processData(data, line, n, isComment, folder, markers) :
+def processData(data, line, n, isComment, folder, markers, marker1) :
     df = data[['X', 'Y', 'Z']].rolling(window=3, min_periods=1, center=True).mean().diff()
     df = df[np.isfinite(df['X'])]
     df = df ** 2
@@ -76,12 +76,12 @@ def processData(data, line, n, isComment, folder, markers) :
     writer.book = book
     writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
 
-    data10 = pd.DataFrame(list(marker["Unnamed: 1"])).T.to_excel(writer, sheet_name=u'Energy', startrow=0,
-                                                                 startcol=2, header=False)
-    data20 = pd.DataFrame(list(marker["Unnamed: 1"])).T.to_excel(writer, sheet_name=u'Entropy', startrow=0,
-                                                                 startcol=2, header=False)
-    data30 = pd.DataFrame(list(marker["Unnamed: 1"])).T.to_excel(writer, sheet_name=u'Hurst', startrow=0,
-                                                                 startcol=2, header=False)
+    data10 = pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Energy', startrow=0,
+                                                                 startcol=1, header=False)
+    data20 = pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Entropy', startrow=0,
+                                                                 startcol=1, header=False)
+    data30 = pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Hurst', startrow=0,
+                                                                 startcol=1, header=False)
 
     if (line == 1):
         data1 = pd.DataFrame(energy, columns=[names[n]]).T.to_excel(writer, sheet_name=u'Energy',
@@ -106,7 +106,7 @@ def processData(data, line, n, isComment, folder, markers) :
 
     writer.save()
 
-"""
+
 #-----------------------------------------------------------------------------------------------------------------------
 #01 Before
 #-----------------------------------------------------------------------------------------------------------------------
@@ -145,7 +145,9 @@ for line in [1]:
         markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
         markers = np.sort(markers)
 
-        processData(data, line, n, False, '01', markers)
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'ГО', u'ГЗ']
+        processData(data, line, n, False, '01', markers, marker1)
 
 #-----------------------------------------------------------------------------------------------------------------------
 #01 After
@@ -185,7 +187,9 @@ for line in [1]:
         #markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
         markers = np.sort(markers)
 
-        processData(data, line, n, False, '01', markers)
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10']
+        processData(data, line, n, False, '01', markers, marker1)
         
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -239,7 +243,9 @@ for line in [1]:
 
         markers = list(markers1) + list(markers2 + markers1[-1])
 
-        processData(data, line, n, True, '08', markers)
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', 
+        u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'ГО', u'ГЗ']
+        processData(data, line, n, True, '08', markers, marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 08 After
@@ -265,8 +271,8 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         data = pd.read_excel("08/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data1 = data[:41787]
-        data2 = data[41788:]
+        data1 = data[:28012]
+        data2 = data[28012:]
         data = data.drop(data[data.stad == '0'].index)
         data = data.reset_index()
 
@@ -291,8 +297,10 @@ for line in [1]:
         markers2 = np.sort(markers2)
 
         markers = list(markers1) + list(markers2 + markers1[-1])
-
-        processData(data, line, n, True, '08', markers)
+        
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', 
+        u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'ГО', u'ГЗ']
+        processData(data, line, n, True, '08', markers, marker1)
 
 
 # -----------------------------------------------------------------------------------------------------------------------
@@ -331,7 +339,9 @@ for line in [1, 2]:
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
 
-        processData(data, line, n, False, '11', np.array(marker["tic-tot"]))
+        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'11', u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end']
+        processData(data, line, n, False, '11', np.array(marker["tic-tot"]), marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 11 After
@@ -369,8 +379,10 @@ for line in [1, 2]:
         marker = pd.read_excel('11/{}/1/Markers_1-2.xls'.format(state))
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
-
-        processData(data, line, n, False, '11', np.array(marker["tic-tot"]))
+        
+        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Contr_end', u'ГО', u'ГЗ', u'ГЗ_end']
+        processData(data, line, n, False, '11', np.array(marker["tic-tot"]), marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 15 Before
@@ -392,21 +404,37 @@ wb.save(filename='15/{}_EEH2.xlsx'.format(state))
 for line in [1]:
     for n in range(10):
         data = pd.read_excel("15/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-
+        data1 = data[:37316]
+        data2 = data[37316:]
         data = data.drop(data[data.stad == '0'].index)
-
         data = data.reset_index()
-        marker = pd.read_excel('15/Before_Soc/1/Markers_1-1.xls')
+
+        marker = pd.read_excel('15/After_Soc/2/Markers_2-2.xls')
         marker = marker[np.isfinite(marker['sec'])]
 
-        lol12 = data.groupby('stad')
-        c = [lol12.get_group(x) for x in lol12.groups]
-        markers = [max(j.index) for j in c]
-        #markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
-        #markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
-        markers = np.sort(markers)
+        data1 = data1.drop(data1[data1.stad == '0'].index)
+        data1 = data1.reset_index()
+        data2 = data2.drop(data2[data2.stad == '0'].index)
+        data2 = data2.reset_index()
 
-        processData(data, line, n, True, '15', markers)
+        lol1 = data1.groupby('stad')
+        c1 = [lol1.get_group(x) for x in lol1.groups]
+        markers1 = [max(j.index) for j in c1]
+        # markers1.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        # markers1.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
+        markers1 = np.sort(markers1)
+
+        lol2 = data2.groupby('stad')
+        c2 = [lol2.get_group(x) for x in lol2.groups]
+        markers2 = [max(j.index) for j in c2]
+        markers2 = np.sort(markers2)
+
+        markers = list(markers1) + list(markers2 + markers1[-1])
+        
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5']
+        processData(data, line, n, True, '15', markers, marker1)
+
 # -----------------------------------------------------------------------------------------------------------------------
 # 15 After
 # -----------------------------------------------------------------------------------------------------------------------
@@ -458,8 +486,9 @@ for line in [1]:
         markers2 = np.sort(markers2)
 
         markers = list(markers1) + list(markers2 + markers1[-1])
-
-        processData(data, line, n, True, '15', markers)
+        marker1 = [u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5']
+        processData(data, line, n, True, '15', markers, marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 18 Before
@@ -499,7 +528,9 @@ for line in [1, 2]:
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
 
-        processData(data, line, n, False, '18', np.array(marker["tic-tot"]))
+        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Contr_end', u'ГО', u'ГЗ', u'ГЗ_end']
+        processData(data, line, n, False, '18', np.array(marker["tic-tot"]), marker1)
 # -----------------------------------------------------------------------------------------------------------------------
 # 18 After
 # -----------------------------------------------------------------------------------------------------------------------
@@ -547,8 +578,9 @@ for line in [1, 2]:
         marker = pd.read_excel('18/{}/1/Markers_1-{}.xls'.format(state, label))
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
-
-        processData(data, line, n, False, '18', np.array(marker["tic-tot"]))
+        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Contr_end']
+        processData(data, line, n, False, '18', np.array(marker["tic-tot"]), marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 22 Before
@@ -575,21 +607,36 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         data = pd.read_excel("22/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-
+        data1 = data[:41235]
+        data2 = data[41235:]
         data = data.drop(data[data.stad == '0'].index)
-
         data = data.reset_index()
-        marker = pd.read_excel('22/Before_Soc/1/Markers_1-1.xls')
+
+        marker = pd.read_excel('22/After_Soc/1/Markers_1-2.xls')
         marker = marker[np.isfinite(marker['sec'])]
 
-        lol12 = data.groupby('stad')
-        c = [lol12.get_group(x) for x in lol12.groups]
-        markers = [max(j.index) for j in c]
-        markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
-        markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
-        markers = np.sort(markers)
+        data1 = data1.drop(data1[data1.stad == '0'].index)
+        data1 = data1.reset_index()
+        data2 = data2.drop(data2[data2.stad == '0'].index)
+        data2 = data2.reset_index()
 
-        processData(data, line, n, True, '22', markers)
+        lol1 = data1.groupby('stad')
+        c1 = [lol1.get_group(x) for x in lol1.groups]
+        markers1 = [max(j.index) for j in c1]
+        # markers1.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        # markers1.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
+        markers1 = np.sort(markers1)
+
+        lol2 = data2.groupby('stad')
+        c2 = [lol2.get_group(x) for x in lol2.groups]
+        markers2 = [max(j.index) for j in c2]
+        markers2 = np.sort(markers2)
+
+        markers = list(markers1) + list(markers2 + markers1[-1])
+
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'ГО', u'ГЗ']
+        processData(data, line, n, True, '22', markers, marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 22 After
@@ -643,9 +690,10 @@ for line in [1]:
         markers2 = np.sort(markers2)
 
         markers = list(markers1) + list(markers2 + markers1[-1])
-
-        processData(data, line, n, True, '22', markers)
-"""
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', 
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'ГО', u'ГЗ']
+        processData(data, line, n, True, '22', markers, marker1)
+    
 # -----------------------------------------------------------------------------------------------------------------------
 # 25 Before
 # -----------------------------------------------------------------------------------------------------------------------
@@ -683,8 +731,10 @@ for line in [1]:
         #markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
         #markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
         markers = np.sort(markers)
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10',
+                   u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10']
+        processData(data, line, n, False, '25', markers, marker1)
 
-        processData(data, line, n, False, '25', markers)
 # -----------------------------------------------------------------------------------------------------------------------
 # 25 After
 # -----------------------------------------------------------------------------------------------------------------------
@@ -719,11 +769,12 @@ for line in [1]:
         lol1 = data.groupby('stad')
         c = [lol1.get_group(x) for x in lol1.groups]
         markers = [max(j.index) for j in c]
-        #markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
-        #markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
+        markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
         markers = np.sort(markers)
-
-        processData(data, line, n, False, '25', markers)
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10',
+                   u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'ГО', u'ГЗ']
+        processData(data, line, n, False, '25', markers, marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 29 Before
@@ -776,8 +827,9 @@ for line in [1]:
         markers2 = np.sort(markers2)
 
         markers = list(markers1) + list(markers2 + markers1[-1])
-
-        processData(data, line, n, True, '29', markers)
+        marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5',
+                  u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5']
+        processData(data, line, n, True, '29', markers, marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
 # 29 After
@@ -804,17 +856,32 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         data = pd.read_excel("29/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-
+        data1 = data[:18971]
+        data2 = data[18971:]
         data = data.drop(data[data.stad == '0'].index)
         data = data.reset_index()
-        marker = pd.read_excel('29/After_Soc/1/Markers_1-2.xls')
+
+        marker = pd.read_excel('29/Before_Soc/2/Markers_2-1.xls')
         marker = marker[np.isfinite(marker['sec'])]
 
-        lol1 = data.groupby('stad')
-        c = [lol1.get_group(x) for x in lol1.groups]
-        markers = [max(j.index) for j in c]
-        markers.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
-        markers.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
-        markers = np.sort(markers)
+        data1 = data1.drop(data1[data1.stad == '0'].index)
+        data1 = data1.reset_index()
+        data2 = data2.drop(data2[data2.stad == '0'].index)
+        data2 = data2.reset_index()
 
-        processData(data, line, n, True, '29', markers)
+        lol1 = data1.groupby('stad')
+        c1 = [lol1.get_group(x) for x in lol1.groups]
+        markers1 = [max(j.index) for j in c1]
+        # markers1.append(int(np.array(marker['tic-tot'].iloc[[0]])[0]))
+        # markers1.append(int(np.array(marker['tic-tot'].iloc[[1]])[0]))
+        markers1 = np.sort(markers1)
+
+        lol2 = data2.groupby('stad')
+        c2 = [lol2.get_group(x) for x in lol2.groups]
+        markers2 = [max(j.index) for j in c2]
+        markers2 = np.sort(markers2)
+
+        markers = list(markers1) + list(markers2 + markers1[-1])
+        marker1 = [u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4',u'4', u'5',
+                  u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'ГО', u'ГЗ']
+        processData(data, line, n, True, '29', markers, marker1)
