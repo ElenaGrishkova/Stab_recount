@@ -2,16 +2,15 @@
 
 from openpyxl import load_workbook
 from openpyxl import Workbook
-from openpyxl.cell import Cell
-import copy
 
-GAME_5STEP_DIR_NAMES=set()
-#GAME_5STEP_DIR_NAMES={'08',u'15',u'22',u'01'}
-#GAME_10STEP_DIR_NAMES={'11',u'18',u'25',u'29'}
-GAME_10STEP_DIR_NAMES={'11',u'18'}
+#GAME_5STEP_DIR_NAMES=set()
+GAME_5STEP_DIR_NAMES={u'08',u'15',u'22',u'29'}
+GAME_10STEP_DIR_NAMES={u'11',u'18',u'25',u'01'}
+#GAME_10STEP_DIR_NAMES={'11',u'18'}
 DIR_NAMES=GAME_5STEP_DIR_NAMES | GAME_10STEP_DIR_NAMES
 SHEET_NAMS=[u'Energy',u'Entropy',u'Hurst']
-BASE_DIR_PATH='D:\!informatics\projects\python\Stab_recount'
+#BASE_DIR_PATH='D:\!informatics\projects\python\Stab_recount'
+BASE_DIR_PATH=u'C:\\Users\\egrishkova\\ЭЭ\\Стабилограмма пересчет'
 SRC_FNAME_BEF='Before_Soc_EEH2.xlsx'
 SRC_FNAME_AFT='After_Soc_EEH2.xlsx'
 COL_CT_MAX=20
@@ -19,10 +18,10 @@ COL_HEIGHT_MAX=11
 EMPTY_CELL_VAL=""
 IS_READONLY=False
 #IS_READONLY=True
-GAME_10STEP_REF_COLNAMS=[u'0', u'ГЗ', u'ГЗ_end', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10',
-                         u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'11', u'Contr_end',	u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end'
+GAME_10STEP_REF_COLNAMS=[u'0', u'ГЗ', u'ГЗ_end', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'ГО', u'ГЗ',
+                         u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'11',	u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end'
 ]
-GAME_5STEP_REF_COLNAMS=[u'0', u'ГЗ', u'ГЗ_end', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',
+GAME_5STEP_REF_COLNAMS=[u'0', u'ГЗ', u'ГЗ_end', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5', u'ГО', u'ГЗ',
                         u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5', u'11',	u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end']
 
 class Empty_col:
@@ -102,7 +101,8 @@ for nam in SHEET_NAMS:
             row_merged.append(EMPTY_CELL_VAL)
             continue
           first_col=False
-
+          if len(cols) == col_n :
+            print "col_n" + str(col_n)
           if isinstance(cols[col_n],Empty_col):
             row_merged.append(EMPTY_CELL_VAL if row_n else cols[col_n].ref_nam)
           else:
