@@ -4,6 +4,10 @@ import numpy as np
 import pyeeg
 import logging
 from openpyxl import Workbook
+
+INFO_COL_TYPES={'time':unicode,'X':float,'Y':float,'Z':float,'stad':unicode,
+                'Profit':int,'TP':int,'LP':int,'Sum':int,'TH':float}
+
 np.seterr(divide='print', invalid='ignore')
 
 logging.basicConfig(filename='log.txt',level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -132,7 +136,7 @@ for line in [1]:
         logging.debug('n: %d', n)
         if n == 1: continue
         #data = pd.read_excel("01/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"01/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"01/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
 
         data = data.drop(data[data.stad == '0'].index)
         data = data.reset_index()
@@ -175,7 +179,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("01/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"01/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"01/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
 
         data = data.drop(data[data.stad == '0'].index)
         data = data.reset_index()
@@ -218,7 +222,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("08/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"08/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"08/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:41787]
         data2 = data[41788:]
         data = data.drop(data[data.stad == '0'].index)
@@ -274,7 +278,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("08/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"08/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"08/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:28012]
         data2 = data[28012:]
         data = data.drop(data[data.stad == '0'].index)
@@ -408,7 +412,7 @@ wb.save(filename='15/{}_EEH2.xlsx'.format(state))
 for line in [1]:
     for n in range(10):
         #data = pd.read_excel("15/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"15/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"15/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:37316]
         data2 = data[37316:]
         data = data.drop(data[data.stad == '0'].index)
@@ -465,7 +469,7 @@ for line in [1]:
     for n in range(5, 10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("15/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"15/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"15/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:23368]
         data2 = data[23368:]
         data = data.drop(data[data.stad == '0'].index)
@@ -613,7 +617,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("22/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"22/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"22/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:41235]
         data2 = data[41235:]
         data = data.drop(data[data.stad == '0'].index)
@@ -671,7 +675,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("22/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"22/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"22/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:26704]
         data2 = data[26704:]
         data = data.drop(data[data.stad == '0'].index)
@@ -726,7 +730,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("25/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"25/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"25/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
 
         data = data.drop(data[data.stad == '0'].index)
 
@@ -769,7 +773,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("25/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"25/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"25/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
 
         data = data.drop(data[data.stad == '0'].index)
         data = data.reset_index()
@@ -811,7 +815,7 @@ for line in [1]:
     for n in range(5, 10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("29/Before_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"29/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"29/Before_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:33901]
         data2 = data[33901:]
         data = data.drop(data[data.stad == '0'].index)
@@ -867,7 +871,7 @@ for line in [1]:
     for n in range(10):
         logging.debug('n: %d', n)
         #data = pd.read_excel("29/After_Soc_INFO.xlsx", sheetname=u'{}{}'.format(n + 1, names[n]))
-        data = pd.read_csv(u"29/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv")
+        data = pd.read_csv(u"29/After_Soc_INFO "+u'{}{}'.format(n + 1, names[n])+u".csv", dtype=INFO_COL_TYPES)
         data1 = data[:18971]
         data2 = data[18971:]
         data = data.drop(data[data.stad == '0'].index)
