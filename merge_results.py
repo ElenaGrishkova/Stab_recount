@@ -9,8 +9,8 @@ GAME_10STEP_DIR_NAMES={u'11',u'18',u'25',u'01'}
 #GAME_10STEP_DIR_NAMES={'11',u'18'}
 DIR_NAMES=GAME_5STEP_DIR_NAMES | GAME_10STEP_DIR_NAMES
 SHEET_NAMS=[u'Energy',u'Entropy',u'Hurst']
-#BASE_DIR_PATH='D:\!informatics\projects\python\Stab_recount'
-BASE_DIR_PATH=u'C:\\Users\\egrishkova\\ЭЭ\\Стабилограмма пересчет'
+BASE_DIR_PATH=ur'D:\!informatics\projects\python\Stab_recount'
+#BASE_DIR_PATH=u'C:\\Users\\egrishkova\\ЭЭ\\Стабилограмма пересчет'
 SRC_FNAME_BEF='Before_Soc_EEH2.xlsx'
 SRC_FNAME_AFT='After_Soc_EEH2.xlsx'
 COL_CT_MAX=20
@@ -56,14 +56,14 @@ for nam in SHEET_NAMS:
     sheet_aft = wb_aft.get_sheet_by_name(nam)
     humans={row[1].value for row in sheet_bef.iter_rows(min_row=2)} | \
            {row[1].value for row in sheet_aft.iter_rows(min_row=2)}
+    humans={h for h in humans if h}
     humans=sorted(humans)
     merged_cols_all={}
-    for coll_group_id,sheet in {('bef',sheet_bef),('aft',sheet_aft)}:
+    for col_group_id,sheet in {('bef',sheet_bef),('aft',sheet_aft)}:
       src_human_id={}
       id=0
       humans_cur=[ cell.value for cell in list(sheet.columns)[1][1:]]
       for human in humans_cur:
-        #if human in humans_cur:
         src_human_id[human]=id
         id+=1
       col_n = 0
@@ -78,16 +78,17 @@ for nam in SHEET_NAMS:
 
           #print "col_n="+str(col_n)
           for human in humans:
-            #print u"human="+human
+            #print u"\thuman="+human
             if human in src_human_id:
-              #print "index="+str(src_human_id[human])
+              #print "\t\tadding cell with row_n="+str(src_human_id[human])
               new_col.append(col[src_human_id[human]].value)
             else:
+              #print "\t\tadding empty cell"
               new_col.append(EMPTY_CELL_VAL)
           cols.append(new_col)
         else:
           cols.append(Empty_col(ref_nam))
-      merged_cols_all[coll_group_id]=cols
+      merged_cols_all[col_group_id]=cols
 
     for row_n in range(len(merged_cols_all['bef'][0])):
       if not row_n and not first_row:
