@@ -347,7 +347,7 @@ for line in [1, 2]:
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
 
-        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', 
+        marker1 = [u'0', u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10',
         u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'11', u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end']
         processData(data, line, n, False, '11', np.array(marker["tic-tot"]), marker1)
 
@@ -388,8 +388,8 @@ for line in [1, 2]:
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
         
-        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', 
-        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Contr_end', u'ГО', u'ГЗ', u'ГЗ_end']
+        marker1 = [u'0', u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10',
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end']
         processData(data, line, n, False, '11', np.array(marker["tic-tot"]), marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------
@@ -538,8 +538,8 @@ for line in [1, 2]:
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
 
-        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', 
-        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Contr_end', u'ГО', u'ГЗ', u'ГЗ_end']
+        marker1 = [u'0', u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10',
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end']
         processData(data, line, n, False, '18', np.array(marker["tic-tot"]), marker1)
 # -----------------------------------------------------------------------------------------------------------------------
 # 18 After
@@ -588,8 +588,8 @@ for line in [1, 2]:
         marker = pd.read_excel('18/{}/1/Markers_1-{}.xls'.format(state, label))
         marker = marker[np.isfinite(marker['sec'])]
         data = data.iloc[:int(marker['tic-tot'].iloc[[-1]]) + 5000]
-        marker1 = [u'0', u'ГЗ', u'ГЗ_end', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', 
-        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Contr_end']
+        marker1 = [u'0', u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10',
+        u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'10', u'Extr_end']
         processData(data, line, n, False, '18', np.array(marker["tic-tot"]), marker1)
 
 # -----------------------------------------------------------------------------------------------------------------------

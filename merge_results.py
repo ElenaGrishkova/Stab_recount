@@ -9,8 +9,9 @@ GAME_10STEP_DIR_NAMES={u'11',u'18',u'25',u'01'}
 #GAME_10STEP_DIR_NAMES={'11',u'18'}
 DIR_NAMES=GAME_5STEP_DIR_NAMES | GAME_10STEP_DIR_NAMES
 SHEET_NAMS=[u'Energy',u'Entropy',u'Hurst']
-BASE_DIR_PATH=ur'D:\!informatics\projects\python\Stab_recount'
+#BASE_DIR_PATH='D:\!informatics\projects\python\Stab_recount'
 #BASE_DIR_PATH=u'C:\\Users\\egrishkova\\ЭЭ\\Стабилограмма пересчет'
+BASE_DIR_PATH=u'D:\\!WORK\\ЭЭ\\Stab_recount'
 SRC_FNAME_BEF='Before_Soc_EEH2.xlsx'
 SRC_FNAME_AFT='After_Soc_EEH2.xlsx'
 COL_CT_MAX=20
@@ -18,10 +19,10 @@ COL_HEIGHT_MAX=11
 EMPTY_CELL_VAL=""
 IS_READONLY=False
 #IS_READONLY=True
-GAME_10STEP_REF_COLNAMS=[u'0', u'ГЗ', u'ГЗ_end', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'ГО', u'ГЗ',
+GAME_10STEP_REF_COLNAMS=[u'0', u'ГО', u'ГЗ', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'ГО', u'ГЗ',
                          u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'11',	u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end'
 ]
-GAME_5STEP_REF_COLNAMS=[u'0', u'ГЗ', u'ГЗ_end', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5', u'ГО', u'ГЗ',
+GAME_5STEP_REF_COLNAMS=[u'0', u'ГО', u'ГЗ', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5', u'ГО', u'ГЗ',
                         u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5', u'11',	u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end']
 
 class Empty_col:
