@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import random
+
 import pandas as pd
 import numpy as np
 import pyeeg
@@ -56,6 +58,31 @@ def getDF_Vz2(data):
     df = df ** 2
     df = np.array(df)
     return df
+def getDF_V(data):
+    # V
+    df = data[['X', 'Y', 'Z']].rolling(window=3, min_periods=1, center=True).mean().diff()
+    df = df[np.isfinite(df['X'])]
+    df = df ** 2
+    df = np.array(df.sum(axis=1))
+    return df ** (1. / 2)
+def getDF_Vx(data):
+    # Vx
+    df = data[['X']].rolling(window=3, min_periods=1, center=True).mean().diff()
+    df = df[np.isfinite(df['X'])]
+    df = np.array(df)
+    return df
+def getDF_Vy(data):
+    # Vy
+    df = data[['Y']].rolling(window=3, min_periods=1, center=True).mean().diff()
+    df = df[np.isfinite(df['Y'])]
+    df = np.array(df)
+    return df
+def getDF_Vz(data):
+    # Vz
+    df = data[['Z']].rolling(window=3, min_periods=1, center=True).mean().diff()
+    df = df[np.isfinite(df['Z'])]
+    df = np.array(df)
+    return df
 
 def calcNDF(df, markers, isComment) :
     ndf = []
@@ -69,12 +96,15 @@ def calcNDF(df, markers, isComment) :
             ndf.append(np.array(df[int(markers[-1]):]))
     return df,  ndf
 
-def processData(data, line, n, isComment, folder, markers, marker1) :
+def processData(data, line, n, isComment, folder, markers, marker1, isNormal) :
     ndf_all={}
     ndf_all['V2']=calcNDF(getDF_V2(data), markers, isComment)
     ndf_all['Vx2']=calcNDF(getDF_Vx2(data), markers, isComment)
     ndf_all['Vy2']=calcNDF(getDF_Vy2(data), markers, isComment)
     ndf_all['Vz2']=calcNDF(getDF_Vz2(data), markers, isComment)
+    ndf_all['Vx'] = calcNDF(getDF_Vx(data), markers, isComment)
+    ndf_all['Vy'] = calcNDF(getDF_Vy(data), markers, isComment)
+    ndf_all['Vz'] = calcNDF(getDF_Vz(data), markers, isComment)
 
     energy={}
     for key, (df, ndf) in ndf_all.iteritems() :
@@ -116,30 +146,26 @@ def processData(data, line, n, isComment, folder, markers, marker1) :
     writer.book = book
     writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
 
-    pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Energy', startrow=0, startcol=1, header=False)
-    pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Energy_correct', startrow=0, startcol=1, header=False)
+    for key in energy.iterkeys():
+        pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Energy'+unicode(key), startrow=0, startcol=1, header=False)
     pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Entropy', startrow=0, startcol=1, header=False)
-    pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Hurst', startrow=0, startcol=1, header=False)
+    for key in energy.iterkeys():
+        pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Hurst'+unicode(key), startrow=0, startcol=1, header=False)
 
-    if (line == 1):
-        for key, energy_item in energy.iteritems() :
-            pd.DataFrame(energy_item, columns=[names[n]]).T.to_excel(writer, sheet_name=u'Energy'+unicode(key),startrow=(line - 1) * 5 + n + 1,
-                                                            startcol=1, header=False)
+    columns=[(u'NORMAL ' if isNormal else u'') +(names[n] if line == 1 else names2[n])]
+    for key, energy_item in energy.iteritems() :
+        pd.DataFrame(energy_item, columns=columns).T.to_excel(writer, sheet_name=u'Energy'+unicode(key),
+                                                              startrow=(line - 1) * 5 + n + 1 + (10 if isNormal else 0),
+                                                                                             startcol=1, header=False)
 
-        pd.DataFrame(entropy, columns=[names[n]]).T.to_excel(writer, sheet_name=u'Entropy', startrow=(line - 1) * 5 + n + 1,
-                                                             startcol=1, header=False)
-        for key, hurst_item in hurst.iteritems():
-            pd.DataFrame(hurst_item, columns=[names[n]]).T.to_excel(writer, sheet_name=u'Hurst'+unicode(key), startrow=(line - 1) * 5 + n + 1,
-                                                            startcol=1, header=False)
-    else:
-        pd.DataFrame(energy, columns=[names2[n]]).T.to_excel(writer, sheet_name=u'Energy', startrow=(line - 1) * 5 + n + 1,
-                                                             startcol=1,header=False)
-        pd.DataFrame(energy_correct, columns=[names2[n]]).T.to_excel(writer, sheet_name=u'Energy_correct',startrow=(line - 1) * 5 + n + 1,
-                                                                     startcol=1, header=False)
-        pd.DataFrame(entropy, columns=[names2[n]]).T.to_excel(writer, sheet_name=u'Entropy', startrow=(line - 1) * 5 + n + 1,
-                                                              startcol=1, header=False)
-        pd.DataFrame(hurstl, columns=[names2[n]]).T.to_excel(writer, sheet_name=u'Hurst',startrow=(line - 1) * 5 + n + 1,
-                                                             startcol=1,header=False)
+    pd.DataFrame(entropy, columns=columns).T.to_excel(writer, sheet_name=u'Entropy',
+                                                                                     startrow=(line - 1) * 5 + n + 1+ (10 if isNormal else 0),
+                                                                                     startcol=1, header=False)
+
+    for key, hurst_item in hurst.iteritems():
+        pd.DataFrame(hurst_item, columns=columns).T.to_excel(writer, sheet_name=u'Hurst'+unicode(key),
+                                                                                            startrow=(line - 1) * 5 + n + 1+ (10 if isNormal else 0),
+                                                                                            startcol=1, header=False)
 
     writer.save()
 
@@ -185,7 +211,17 @@ for line in [1]:
 
         marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', 
         u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'ГО', u'ГЗ']
-        processData(data, line, n, False, '01', markers, marker1)
+        dataXYZ = np.array(data[['X', 'Y', 'Z']].T)
+        height = len(dataXYZ[0])
+
+        mean = [j.mean() for j in dataXYZ]
+        logging.debug('meanX: ' + str(mean[0]) + ', meanY: ' + str(mean[1]) + 'meanZ: ' + str(mean[2]))
+        std = [j.std() for j in dataXYZ]
+        logging.debug('stdX: ' + str(std[0]) + ', stdY: ' + str(std[1]) + 'stdZ: ' + str(std[2]))
+
+        data_normal = pd.DataFrame([ [random.gauss(mean[dem], std[dem]) for dem in range(3)] for i in range(height) ], columns=['X', 'Y', 'Z'])
+        processData(data, line, n, False, '01', markers, marker1, False)
+        processData(data_normal, line, n, False, '01', markers, marker1, True)
 #
 # #-----------------------------------------------------------------------------------------------------------------------
 # #01 After
