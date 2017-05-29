@@ -37,6 +37,13 @@ def getDF_V2(data):
     df = df ** 2
     df = np.array(df.sum(axis=1))
     return df
+def getDF_Vx2_Vy2(data):
+    # Vx**2+Vy**2
+    df = data[['X', 'Y', 'Z']].rolling(window=3, min_periods=1, center=True).mean().diff()
+    df = df[np.isfinite(df['X'])]
+    df = df ** 2
+    df = np.array(df['X']+df['Y'])
+    return df
 def getDF_Vx2(data):
     # Vx**2
     df = data[['X']].rolling(window=3, min_periods=1, center=True).mean().diff()
@@ -96,9 +103,10 @@ def calcNDF(df, markers, isComment) :
             ndf.append(np.array(df[int(markers[-1]):]))
     return df,  ndf
 
-def processData(data, line, n, isComment, folder, markers, marker1, isNormal) :
+def processData(data, line, n, isComment, folder, markers, marker1, isNormal=False) :
     ndf_all={}
     ndf_all['V2']=calcNDF(getDF_V2(data), markers, isComment)
+    ndf_all['Vx2+Vy2']=calcNDF(getDF_Vx2_Vy2(data), markers, isComment)
     ndf_all['Vx2']=calcNDF(getDF_Vx2(data), markers, isComment)
     ndf_all['Vy2']=calcNDF(getDF_Vy2(data), markers, isComment)
     ndf_all['Vz2']=calcNDF(getDF_Vz2(data), markers, isComment)
@@ -134,10 +142,35 @@ def processData(data, line, n, isComment, folder, markers, marker1, isNormal) :
 
     amax = [np.amax(j, axis=0) for j in nde]
     amin = [np.amin(j, axis=0) for j in nde]
-    delta = (np.array(amax) - np.array(amin)) / 40
-    nde = [(nde[j] - amin[j]) // delta[j] + 1 for j in range(len(amin))]
-    t = [j[:, 0] * 1000000 + j[:, 1] * 1000 + j[:, 2] for j in nde]
-    entropy = [-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i)))) for i in t]
+
+    entropy={}
+    delta1 = (np.array(amax) - np.array(amin)) / 40
+    nde1 = [(nde[j] - amin[j]) // delta1[j] + 1 for j in range(len(amin))]
+    t1 = [j[:, 0] * 1000000 + j[:, 1] * 1000 + j[:, 2] for j in nde1]
+    entropy['old'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(1600) for i in t1]
+
+    tX = [j[:, 0] * 1000000 for j in nde1]
+    entropy['X old'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(1600) for i in tX]
+
+    tY = [j[:, 1] * 1000 for j in nde1]
+    entropy['Y old'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(1600) for i in tY]
+
+    tZ = [j[:, 2] for j in nde1]
+    entropy['Z old'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(1600) for i in tZ]
+
+    delta2 = [(amax[j] - amin[j]) / (len(nde[j])) ** (1./2) for j in range(len(amin))]
+    nde2 = [(nde[j] - amin[j]) // delta2[j] + 1 for j in range(len(amin))]
+    t2 = [j[:, 0] * 1000000 + j[:, 1] * 1000 + j[:, 2] for j in nde2]
+    entropy['new'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(float(len(i))) for i in t2]
+
+    tX = [j[:, 0] * 1000000 for j in nde2]
+    entropy['X'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(float(len(i))) for i in tX]
+
+    tY = [j[:, 1] * 1000 for j in nde2]
+    entropy['Y'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(float(len(i))) for i in tY]
+
+    tZ = [j[:, 2] for j in nde2]
+    entropy['Z'] = [(-sum((rle(np.sort(i))[0] / float(len(i))) * np.log2(rle(np.sort(i))[0] / float(len(i))))) / np.log2(float(len(i))) for i in tZ]
 
     from openpyxl import load_workbook
 
@@ -147,24 +180,28 @@ def processData(data, line, n, isComment, folder, markers, marker1, isNormal) :
     writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
 
     for key in energy.iterkeys():
-        pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Energy'+unicode(key), startrow=0, startcol=1, header=False)
-    pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Entropy', startrow=0, startcol=1, header=False)
+        pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Energy '+unicode(key), startrow=0, startcol=1, header=False)
+    for key in entropy.iterkeys():
+        pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Entropy '+unicode(key), startrow=0, startcol=1, header=False)
     for key in energy.iterkeys():
-        pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Hurst'+unicode(key), startrow=0, startcol=1, header=False)
+        pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Hurst '+unicode(key), startrow=0, startcol=1, header=False)
 
-    columns=[(u'NORMAL ' if isNormal else u'') +(names[n] if line == 1 else names2[n])]
+    #columns=[(u'NORMAL ' if isNormal else u'') +(names[n] if line == 1 else names2[n])]
+    #n_Normal = 10 if isNormal else 0
+    n_Normal = 0
+    columns=[names[n] if line == 1 else names2[n]]
     for key, energy_item in energy.iteritems() :
-        pd.DataFrame(energy_item, columns=columns).T.to_excel(writer, sheet_name=u'Energy'+unicode(key),
-                                                              startrow=(line - 1) * 5 + n + 1 + (10 if isNormal else 0),
+        pd.DataFrame(energy_item, columns=columns).T.to_excel(writer, sheet_name=u'Energy '+unicode(key),
+                                                              startrow=(line - 1) * 5 + n + 1 + n_Normal,
                                                                                              startcol=1, header=False)
-
-    pd.DataFrame(entropy, columns=columns).T.to_excel(writer, sheet_name=u'Entropy',
-                                                                                     startrow=(line - 1) * 5 + n + 1+ (10 if isNormal else 0),
+    for key, entropy_item in entropy.iteritems():
+        pd.DataFrame(entropy_item, columns=columns).T.to_excel(writer, sheet_name=u'Entropy '+unicode(key),
+                                                           startrow=(line - 1) * 5 + n + 1+ n_Normal,
                                                                                      startcol=1, header=False)
 
     for key, hurst_item in hurst.iteritems():
-        pd.DataFrame(hurst_item, columns=columns).T.to_excel(writer, sheet_name=u'Hurst'+unicode(key),
-                                                                                            startrow=(line - 1) * 5 + n + 1+ (10 if isNormal else 0),
+        pd.DataFrame(hurst_item, columns=columns).T.to_excel(writer, sheet_name=u'Hurst '+unicode(key),
+                                                                                            startrow=(line - 1) * 5 + n + 1+ n_Normal,
                                                                                             startcol=1, header=False)
 
     writer.save()
@@ -184,6 +221,7 @@ names = [u'Иванов Владислав',
          u'Котова Маргарита',
          u'Гуров Алексей',
          u'Федотов Никита']
+names2=[]
 
 # folder = '2016-03-11_Collective_action'
 state = 'Before_Soc'
@@ -211,17 +249,17 @@ for line in [1]:
 
         marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', 
         u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'ГО', u'ГЗ']
-        dataXYZ = np.array(data[['X', 'Y', 'Z']].T)
-        height = len(dataXYZ[0])
-
-        mean = [j.mean() for j in dataXYZ]
-        logging.debug('meanX: ' + str(mean[0]) + ', meanY: ' + str(mean[1]) + 'meanZ: ' + str(mean[2]))
-        std = [j.std() for j in dataXYZ]
-        logging.debug('stdX: ' + str(std[0]) + ', stdY: ' + str(std[1]) + 'stdZ: ' + str(std[2]))
-
-        data_normal = pd.DataFrame([ [random.gauss(mean[dem], std[dem]) for dem in range(3)] for i in range(height) ], columns=['X', 'Y', 'Z'])
-        processData(data, line, n, False, '01', markers, marker1, False)
-        processData(data_normal, line, n, False, '01', markers, marker1, True)
+        # dataXYZ = np.array(data[['X', 'Y', 'Z']].T)
+        # height = len(dataXYZ[0])
+        #
+        # mean = [j.mean() for j in dataXYZ]
+        # logging.debug('meanX: ' + str(mean[0]) + ', meanY: ' + str(mean[1]) + 'meanZ: ' + str(mean[2]))
+        # std = [j.std() for j in dataXYZ]
+        # logging.debug('stdX: ' + str(std[0]) + ', stdY: ' + str(std[1]) + 'stdZ: ' + str(std[2]))
+        #
+        # data_normal = pd.DataFrame([ [random.gauss(mean[dem], std[dem]) for dem in range(3)] for i in range(height) ], columns=['X', 'Y', 'Z'])
+        processData(data, line, n, False, '01', markers, marker1)
+        #processData(data_normal, line, n, False, '01', markers, marker1, True)
 #
 # #-----------------------------------------------------------------------------------------------------------------------
 # #01 After
