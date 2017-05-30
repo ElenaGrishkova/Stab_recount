@@ -8,10 +8,12 @@ GAME_5STEP_DIR_NAMES={u'08',u'15',u'22',u'29'}
 GAME_10STEP_DIR_NAMES={u'11',u'18',u'25',u'01'}
 #GAME_10STEP_DIR_NAMES={'11',u'18'}
 DIR_NAMES=GAME_5STEP_DIR_NAMES | GAME_10STEP_DIR_NAMES
-SHEET_NAMS=[u'Energy',u'Entropy',u'Hurst']
+SHEET_NAMS=[u'Energy V2', u'Energy Vx2+Vy2', u'Energy Vx2', u'Energy Vy2', u'Energy Vz2', u'Energy Vx', u'Energy Vy', u'Energy Vz',
+            u'Entropy old', u'Entropy X old', u'Entropy Y old',u'Entropy Z old',u'Entropy new',u'Entropy X',u'Entropy Y', u'Entropy Z',
+            u'Hurst V2', u'Hurst Vx2+Vy2', u'Hurst Vx2', u'Hurst Vy2', u'Hurst Vz2', u'Hurst Vx', u'Hurst Vy', u'Hurst Vz',]
 #BASE_DIR_PATH='D:\!informatics\projects\python\Stab_recount'
-#BASE_DIR_PATH=u'C:\\Users\\egrishkova\\ЭЭ\\Стабилограмма пересчет'
-BASE_DIR_PATH=u'D:\\!WORK\\ЭЭ\\Stab_recount'
+BASE_DIR_PATH=u'C:\\Users\\egrishkova\\ЭЭ\\Стабилограмма пересчет'
+#BASE_DIR_PATH=u'D:\\!WORK\\ЭЭ\\Stab_recount'
 SRC_FNAME_BEF='Before_Soc_EEH2.xlsx'
 SRC_FNAME_AFT='After_Soc_EEH2.xlsx'
 COL_CT_MAX=20
@@ -112,7 +114,7 @@ for nam in SHEET_NAMS:
 
       sheet_merged.append(row_merged)
 
-wb_merged.save('fucking.xlsx')
+wb_merged.save('Merged_EEH2.xlsx')
 
 
 
