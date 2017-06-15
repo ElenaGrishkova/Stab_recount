@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
+#Программа для объединения файлов из папок отдельных экспериментов в одну сводную таблицу. "Merged_EEH2.xlsx"
+# Т.к. состав и название периодов могут быть разные, то они прописаны вручную
 
 from openpyxl import load_workbook
 from openpyxl import Workbook
 
-#GAME_5STEP_DIR_NAMES=set()
 GAME_5STEP_DIR_NAMES={u'08',u'15',u'22',u'29'}
 GAME_10STEP_DIR_NAMES={u'11',u'18',u'25',u'01'}
-#GAME_10STEP_DIR_NAMES={'11',u'18'}
 DIR_NAMES=GAME_5STEP_DIR_NAMES | GAME_10STEP_DIR_NAMES
+#Имена Листов, которые будут объединены
 SHEET_NAMS=[u'Energy V2', u'Energy Vx2+Vy2', u'Energy Vx2', u'Energy Vy2', u'Energy Vz2', u'Energy Vx', u'Energy Vy', u'Energy Vz',
             u'Entropy old', u'Entropy X old', u'Entropy Y old',u'Entropy Z old',u'Entropy new',u'Entropy X',u'Entropy Y', u'Entropy Z',
             u'Hurst V2', u'Hurst Vx2+Vy2', u'Hurst Vx2', u'Hurst Vy2', u'Hurst Vz2', u'Hurst Vx', u'Hurst Vy', u'Hurst Vz',]
-#BASE_DIR_PATH='D:\!informatics\projects\python\Stab_recount'
+#Здесь прописать путь к корневому каталогу на локалоной машине
 BASE_DIR_PATH=u'C:\\Users\\egrishkova\\ЭЭ\\Стабилограмма пересчет'
-#BASE_DIR_PATH=u'D:\\!WORK\\ЭЭ\\Stab_recount'
+#Имена файлов, которые будут объединяться
 SRC_FNAME_BEF='Before_Soc_EEH2.xlsx'
 SRC_FNAME_AFT='After_Soc_EEH2.xlsx'
 COL_CT_MAX=20
@@ -21,6 +22,9 @@ COL_HEIGHT_MAX=11
 EMPTY_CELL_VAL=""
 IS_READONLY=False
 #IS_READONLY=True
+
+#Наименования колонок. Полное объединение! Если здесь не будет хватать каких-то колонок, но они будут присутствовать в исходных файлах
+# , то программа будет падать. Если здесь перечислена колонка, которой нет в исходном файле, то в конечный файл добавится пустая именованная колонка
 GAME_10STEP_REF_COLNAMS=[u'0', u'ГО', u'ГЗ', u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'ГО', u'ГЗ',
                          u'1',u'1',u'2',u'2',u'3',u'3',u'4',u'4',u'5',u'5',u'6',u'6',u'7',u'7',u'8',u'8',u'9',u'9',u'10',u'10', u'11',	u'Extr_end', u'ГО', u'ГЗ', u'ГЗ_end'
 ]
@@ -79,14 +83,10 @@ for nam in SHEET_NAMS:
           col=list(sheet.columns)[col_n + 2][1:]
           col_n += 1
 
-          #print "col_n="+str(col_n)
           for human in humans:
-            #print u"\thuman="+human
             if human in src_human_id:
-              #print "\t\tadding cell with row_n="+str(src_human_id[human])
               new_col.append(col[src_human_id[human]].value)
             else:
-              #print "\t\tadding empty cell"
               new_col.append(EMPTY_CELL_VAL)
           cols.append(new_col)
         else:

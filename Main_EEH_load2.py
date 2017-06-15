@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import random
 
 import pandas as pd
 import numpy as np
@@ -119,9 +118,6 @@ def processData(data, line, n, isComment, folder, markers, marker1, isNormal=Fal
         mean = [j.mean() for j in ndf]
         std = [j.std() for j in ndf]
         energy[key] = (np.array(mean) ** 2 + np.array(std) ** 2) ** (1. / 2)
-    # logging.debug('ndf: ')
-    # for j in ndf :
-    #     logging.debug('j: %s', ', '.join(str(v) for v in j))
 
     hurst={}
     for key, (df, ndf) in ndf_all.iteritems():
@@ -186,22 +182,19 @@ def processData(data, line, n, isComment, folder, markers, marker1, isNormal=Fal
     for key in energy.iterkeys():
         pd.DataFrame(marker1).T.to_excel(writer, sheet_name=u'Hurst '+unicode(key), startrow=0, startcol=1, header=False)
 
-    #columns=[(u'NORMAL ' if isNormal else u'') +(names[n] if line == 1 else names2[n])]
-    #n_Normal = 10 if isNormal else 0
-    n_Normal = 0
     columns=[names[n] if line == 1 else names2[n]]
     for key, energy_item in energy.iteritems() :
         pd.DataFrame(energy_item, columns=columns).T.to_excel(writer, sheet_name=u'Energy '+unicode(key),
-                                                              startrow=(line - 1) * 5 + n + 1 + n_Normal,
+                                                              startrow=(line - 1) * 5 + n + 1,
                                                                                              startcol=1, header=False)
     for key, entropy_item in entropy.iteritems():
         pd.DataFrame(entropy_item, columns=columns).T.to_excel(writer, sheet_name=u'Entropy '+unicode(key),
-                                                           startrow=(line - 1) * 5 + n + 1+ n_Normal,
+                                                           startrow=(line - 1) * 5 + n + 1,
                                                                                      startcol=1, header=False)
 
     for key, hurst_item in hurst.iteritems():
         pd.DataFrame(hurst_item, columns=columns).T.to_excel(writer, sheet_name=u'Hurst '+unicode(key),
-                                                                                            startrow=(line - 1) * 5 + n + 1+ n_Normal,
+                                                                                            startrow=(line - 1) * 5 + n + 1,
                                                                                             startcol=1, header=False)
 
     writer.save()
@@ -249,17 +242,8 @@ for line in [1]:
 
         marker1 = [u'ГО', u'ГЗ', u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', 
         u'1', u'1', u'2', u'2', u'3', u'3', u'4', u'4', u'5', u'5', u'6', u'6', u'7', u'7', u'8', u'8', u'9', u'9', u'10', u'ГО', u'ГЗ']
-        # dataXYZ = np.array(data[['X', 'Y', 'Z']].T)
-        # height = len(dataXYZ[0])
-        #
-        # mean = [j.mean() for j in dataXYZ]
-        # logging.debug('meanX: ' + str(mean[0]) + ', meanY: ' + str(mean[1]) + 'meanZ: ' + str(mean[2]))
-        # std = [j.std() for j in dataXYZ]
-        # logging.debug('stdX: ' + str(std[0]) + ', stdY: ' + str(std[1]) + 'stdZ: ' + str(std[2]))
-        #
-        # data_normal = pd.DataFrame([ [random.gauss(mean[dem], std[dem]) for dem in range(3)] for i in range(height) ], columns=['X', 'Y', 'Z'])
+
         processData(data, line, n, False, '01', markers, marker1)
-        #processData(data_normal, line, n, False, '01', markers, marker1, True)
 
 #-----------------------------------------------------------------------------------------------------------------------
 #01 After
