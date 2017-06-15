@@ -117,13 +117,15 @@ def processData(data, line, n, isComment, folder, markers, marker1, isNormal=Fal
     for key, (df, ndf) in ndf_all.iteritems() :
         mean = [j.mean() for j in ndf]
         std = [j.std() for j in ndf]
-        energy[key] = (np.array(mean) ** 2 + np.array(std) ** 2) ** (1. / 2)
+        energy[key] = np.log((np.array(mean) ** 2 + np.array(std) ** 2) ** (1. / 2))
 
     hurst={}
     for key, (df, ndf) in ndf_all.iteritems():
         hurst[key] = [pyeeg.hurst(j) for j in ndf]
 
-    de = data[['X', 'Y', 'Z']].rolling(window=3, min_periods=1, center=True).mean().diff()
+#Внимание! Для энтропии убрала diff, чтобы считал не по скоростям, а по самим точкам,
+    # но нужно ли оставлять усреднение по трем точкам? Сейчас оно оставлено
+    de = data[['X', 'Y', 'Z']].rolling(window=3, min_periods=1, center=True).mean()
     de = de[np.isfinite(de['X'])]
     nde = []
     prev = 0
